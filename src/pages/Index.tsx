@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import TickerCard from '@/components/TickerCard';
 import PricingCard from '@/components/PricingCard';
 import { getAllTickersData } from '@/utils/yahooFinance';
-import { Badge } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const Index = () => {
   const stocks = getAllTickersData();
