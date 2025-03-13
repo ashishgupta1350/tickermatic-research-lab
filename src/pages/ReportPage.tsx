@@ -70,6 +70,43 @@ const ReportPage = () => {
     }
   };
   
+  const handleRegenerateReport = async (query: string, tickerSymbol: string) => {
+    setIsLoading(true);
+    
+    try {
+      // 1. Fetch stock data
+      const stockData = await fetchTickerData(tickerSymbol);
+      
+      if (!stockData) {
+        toast({
+          title: "Error",
+          description: `Could not find data for ticker: ${tickerSymbol}`,
+          variant: "destructive"
+        });
+        setIsLoading(false);
+        return;
+      }
+      
+      // 2. Generate custom research report using OpenAI with the query
+      const customReport = await generateResearchReport(stockData, apiKey, query);
+      setReport(customReport);
+      
+      toast({
+        title: "Success",
+        description: "Research report regenerated successfully",
+      });
+    } catch (error) {
+      console.error("Error regenerating report:", error);
+      toast({
+        title: "Error",
+        description: "Failed to regenerate research report. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -110,7 +147,11 @@ const ReportPage = () => {
           <>
             <h1 className="text-3xl font-bold mb-6">Research Report</h1>
             <div className="p-8 rounded-lg glass border border-border/50">
-              <ResearchReport report={report} isLoading={isLoading} />
+              <ResearchReport 
+                report={report} 
+                isLoading={isLoading} 
+                onRegenerateReport={handleRegenerateReport}
+              />
             </div>
           </>
         )}

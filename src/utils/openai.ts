@@ -73,15 +73,45 @@ const mockReports: Record<string, ResearchReport> = {
 // Simulate OpenAI API call to generate a research report
 export const generateResearchReport = async (
   stockData: StockData,
-  apiKey?: string
+  apiKey?: string,
+  customQuery?: string
 ): Promise<ResearchReport> => {
   // In a real implementation, you would make an API call to OpenAI here
-  // using the provided API key and stock data
+  // using the provided API key, stock data, and custom query
   
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const report = mockReports[stockData.ticker];
+      // Get the base report
+      let report = mockReports[stockData.ticker];
+      
       if (report) {
+        // If we have a custom query, modify the report
+        if (customQuery) {
+          // This is a simple mock implementation that modifies the report based on keywords in the query
+          // In a real app, this would be handled by sending the query to OpenAI
+          
+          if (customQuery.toLowerCase().includes('market') || customQuery.toLowerCase().includes('landscape')) {
+            report = {
+              ...report,
+              marketPosition: `EXPANDED MARKET ANALYSIS: ${report.marketPosition} The company is operating in a ${stockData.marketCap > 500000000000 ? 'highly competitive' : 'growing'} market with significant opportunities for expansion. Key competitors include industry leaders and emerging players that are rapidly innovating. Market share trends show ${Math.random() > 0.5 ? 'positive momentum' : 'some challenges'} in core segments.`,
+            };
+          }
+          
+          if (customQuery.toLowerCase().includes('financial') || customQuery.toLowerCase().includes('ratio')) {
+            report = {
+              ...report,
+              financialAnalysis: `EXPANDED FINANCIAL RATIOS: ${report.financialAnalysis} Additional key metrics include: Current Ratio: ${(Math.random() * 2 + 1).toFixed(2)}, Quick Ratio: ${(Math.random() * 1.5 + 0.8).toFixed(2)}, Debt-to-Equity: ${(Math.random() * 0.8 + 0.2).toFixed(2)}, Return on Equity: ${(Math.random() * 25 + 5).toFixed(2)}%, Return on Assets: ${(Math.random() * 15 + 2).toFixed(2)}%, Operating Margin: ${(Math.random() * 30 + 10).toFixed(2)}%.`,
+            };
+          }
+          
+          if (customQuery.toLowerCase().includes('risk')) {
+            report = {
+              ...report,
+              risks: `DETAILED RISK ASSESSMENT: ${report.risks} Additionally, scenario analysis suggests potential downside of ${(Math.random() * 25 + 10).toFixed(1)}% in adverse market conditions. ESG risks related to ${Math.random() > 0.5 ? 'environmental compliance' : 'governance structure'} warrant ongoing monitoring.`,
+            };
+          }
+        }
+        
         resolve(report);
       } else {
         // If we don't have a mock report, create a basic one
@@ -95,6 +125,14 @@ export const generateResearchReport = async (
           outlook: `The future outlook for ${stockData.companyName} depends on its ability to maintain growth and adapt to changing market conditions.`,
           recommendation: `Based on current valuation and market conditions, we remain NEUTRAL on ${stockData.ticker} with a 12-month price target of $${(stockData.price * 1.1).toFixed(2)}.`
         };
+        
+        if (customQuery) {
+          // Apply similar modifications as above for custom queries
+          if (customQuery.toLowerCase().includes('market') || customQuery.toLowerCase().includes('landscape')) {
+            basicReport.marketPosition += ` EXPANDED: The company operates in a ${Math.random() > 0.5 ? 'fragmented' : 'concentrated'} market with ${Math.random() > 0.5 ? 'high' : 'moderate'} barriers to entry.`;
+          }
+        }
+        
         resolve(basicReport);
       }
     }, 3000); // Simulate a longer delay for AI generation
