@@ -19,6 +19,7 @@ export interface StockData {
   supply: number;
   revenue: number;
   grossProfits: number;
+  category?: string; // Adding category field
 }
 
 const mockStockData: Record<string, StockData> = {
@@ -38,7 +39,8 @@ const mockStockData: Record<string, StockData> = {
     averageVolume: 54680000,
     supply: 15460000000,
     revenue: 383280000000,
-    grossProfits: 170782000000
+    grossProfits: 170782000000,
+    category: 'large-cap'
   },
   'MSFT': {
     ticker: 'MSFT',
@@ -56,7 +58,8 @@ const mockStockData: Record<string, StockData> = {
     averageVolume: 26420000,
     supply: 7430000000,
     revenue: 211910000000,
-    grossProfits: 146577000000
+    grossProfits: 146577000000,
+    category: 'large-cap'
   },
   'GOOGL': {
     ticker: 'GOOGL',
@@ -74,7 +77,8 @@ const mockStockData: Record<string, StockData> = {
     averageVolume: 20780000,
     supply: 12340000000,
     revenue: 307392000000,
-    grossProfits: 173738000000
+    grossProfits: 173738000000,
+    category: 'large-cap'
   },
   'AMZN': {
     ticker: 'AMZN',
@@ -92,7 +96,8 @@ const mockStockData: Record<string, StockData> = {
     averageVolume: 41560000,
     supply: 10350000000,
     revenue: 574780000000,
-    grossProfits: 234400000000
+    grossProfits: 234400000000,
+    category: 'large-cap'
   },
   'TSLA': {
     ticker: 'TSLA',
@@ -110,7 +115,104 @@ const mockStockData: Record<string, StockData> = {
     averageVolume: 93840000,
     supply: 3180000000,
     revenue: 94760000000,
-    grossProfits: 19630000000
+    grossProfits: 19630000000,
+    category: 'large-cap'
+  },
+  // Adding 5 smaller companies as a different category
+  'CROX': {
+    ticker: 'CROX',
+    companyName: 'Crocs, Inc.',
+    price: 142.78,
+    change: 1.32,
+    changePercent: 0.93,
+    marketCap: 8670000000,
+    volume: 1253421,
+    peRatio: 9.15,
+    dividend: 0,
+    eps: 15.61,
+    high52: 165.32,
+    low52: 108.25,
+    averageVolume: 1320000,
+    supply: 60700000,
+    revenue: 3628000000,
+    grossProfits: 2179000000,
+    category: 'small-cap'
+  },
+  'PLCE': {
+    ticker: 'PLCE',
+    companyName: 'The Children\'s Place, Inc.',
+    price: 10.32,
+    change: -0.28,
+    changePercent: -2.64,
+    marketCap: 128600000,
+    volume: 782345,
+    peRatio: 0,
+    dividend: 0,
+    eps: -14.77,
+    high52: 47.23,
+    low52: 8.12,
+    averageVolume: 920000,
+    supply: 12460000,
+    revenue: 1572000000,
+    grossProfits: 411000000,
+    category: 'small-cap'
+  },
+  'CAKE': {
+    ticker: 'CAKE',
+    companyName: 'The Cheesecake Factory Inc.',
+    price: 35.24,
+    change: 0.43,
+    changePercent: 1.24,
+    marketCap: 1790000000,
+    volume: 526789,
+    peRatio: 17.01,
+    dividend: 1.40,
+    eps: 2.07,
+    high52: 41.12,
+    low52: 28.58,
+    averageVolume: 830000,
+    supply: 50800000,
+    revenue: 3370000000,
+    grossProfits: 607000000,
+    category: 'small-cap'
+  },
+  'PRTS': {
+    ticker: 'PRTS',
+    companyName: 'CarParts.com, Inc.',
+    price: 1.78,
+    change: 0.13,
+    changePercent: 7.88,
+    marketCap: 99500000,
+    volume: 432678,
+    peRatio: 0,
+    dividend: 0,
+    eps: -0.42,
+    high52: 4.53,
+    low52: 1.26,
+    averageVolume: 642000,
+    supply: 55900000,
+    revenue: 675400000,
+    grossProfits: 227600000,
+    category: 'small-cap'
+  },
+  'FRPT': {
+    ticker: 'FRPT',
+    companyName: 'Freshpet, Inc.',
+    price: 112.38,
+    change: 1.87,
+    changePercent: 1.69,
+    marketCap: 5430000000,
+    volume: 365421,
+    peRatio: 186.85,
+    dividend: 0,
+    eps: 0.60,
+    high52: 119.74,
+    low52: 87.03,
+    averageVolume: 730000,
+    supply: 48300000,
+    revenue: 741500000,
+    grossProfits: 303600000,
+    category: 'small-cap'
   }
 };
 
@@ -138,3 +240,4 @@ export const fetchTickerData = async (ticker: string): Promise<StockData | null>
     }, 1000); // Simulate network delay
   });
 };
+
